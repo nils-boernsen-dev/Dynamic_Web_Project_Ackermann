@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <title>Mein Online-Buch</title>
+</head>
+
+<body>
+    <h1>Mein Online-Buch</h1>
+    <ul>
+        <li>
+            <a href="#chapter01">Kapitel 1</a>
+        </li>
+        <li>
+            <a href="#chapter02">Kapitel 2</a>
+        </li>
+        <li>
+            <a href="#chapter03">Kapitel 3</a>
+        </li>
+        <li>
+            <a href="#chapter04">Kapitel 4</a>
+        </li>
+        <li>
+            <a href="#chapter05">Kapitel 5</a>
+        </li>
+    </ul>
+    <h2 id="chapter01">Kaptiel 1</h2>
+    <p>...</p>
+    <h2 id="chapter02">Kapitel 2</h2>
+    <p>
+    How to Make Links Open in a New Window or Tab
+by Christopher Heng, thesitewizard.com
+
+I was asked by a visitor how he could make hyperlinks on his website open a new browser window or tab when clicked. This article answers that question.
+Prerequisites
+
+Since the visitor did not specify which web editor he was using, I will assume here that he is working directly in HTML.
+
+Note that this does not mean you cannot follow this tutorial if you use a visual web editor, or if your website uses some sort of blogging software. It merely means that you will need to somehow access the HTML code of your page so that you can modify it. Most web editors and blogging software allow you to do this.
+
+For example, if you are using Expression Web, you can modify the HTML code of your web page by switching to the Code mode. Instructions for this can be found in the article How to Insert HTML Code into a Web Page with Expression Web. Similarly, Dreamweaver users can follow the steps given in How to Insert Raw HTML Code in Dreamweaver, BlueGriffon users the tutorial How to Insert HTML Code in BlueGriffon, and KompoZer users the guide How to Insert HTML in KompoZer.
+How to Open Hyperlinks in a New Browser Tab or Window
+
+The short answer is: just add a target="_blank" attribute to your links (anchor tags).
+
+For example, if you have a link that says the following:
+<a href="https://www.thesitewizard.com/">thesitewizard.com</a>
+
+Change the above so that it now says:
+<a href="https://www.thesitewizard.com/" target="_blank">thesitewizard.com</a>
+
+Now when your visitors click that link, it will open in a new window or tab (depending on which web browser they are using and how they configured that browser).
+
+Note that if your web page uses the "strict" DOCTYPE of XHTML 1.0 or 1.1, you will not be able to do the above and still have your page validate as correct. However, I suspect virtually nobody uses those, so don't worry if you don't understand what I just said in this paragraph. The "transitional" versions of those DOCTYPEs are fine, though, since the target attribute is still supported there.
+
+If you are using Expression Web, Dreamweaver, BlueGriffon or KompoZer, just click somewhere in the link that you want to modify, switch to the mode that allows you to change the HTML code (see the tutorials listed earlier in the Prerequisites section to find out how to do this), and add the target="_blank" attribute.
+It Doesn't Have the Benefit You Think It Confers
+
+I know that some new webmasters seem to have got the impression that causing external links to open in a new window helps to keep people from leaving your website. This is an erroneous assumption. If someone clicks on a link and wants to return to your site, they will simply hit the Back button on their browser. Most people, even non-computer-geeks, learn this feature of their browser within a short time of discovering the Internet. The power users learn, in addition, how to right click a link and select "Open in a new tab" (or window) when they need a link to be displayed in a separate tab or window.
+
+When you create links that open in a new window, you are actually preventing newcomers from returning to your website. You may think that they will know how to simply switch back to the original window. My experience with such people suggests otherwise; they are stymied by the Back button not working, and are not even aware that they are looking at a new tab or window. When they can't figure out how to solve the problem, they will give up and move on to other things.
+
+The situation is not better with experienced users. While they can figure out that they are looking at a new tab or window, and can switch back, they tend to get very irritated at your site for opening windows without their permission. After all, they are power users: if they wanted to open a new window, they will open it themselves; they don't want you to do it without their consent. It's worse if all your links open in new windows (leading to the comedic situation described in my article about usability mistakes made by amateur webmasters).
+It Makes Your Site Vulnerable to Phishing Attacks
+
+At the time this is written, when you open a new page with target="_blank", the site you link to gains access to the window/tab containing your page and is able to change it (in the visitor's browser) to display a different web address.
+
+This not only thwarts your attempt to keep visitors at your site (if that's your purpose), it's also a potential danger to them. For example, if you have a login page, the linked-to site may replace it with one on another site that looks like yours, but actually collects your visitor's login details. This kind of attack is called "phishing". Even if your site does not have facilities for visitors to log in, the linked-to site can replace it with a page that delivers malware.
+
+This vulnerability is not hypothetical. The people from the Google Security Team have noted a "significant number of reports" of such "tabnabbing" being used to deliver malware.
+
+Technical details (only for those who are interested): the newly open site gains limited access to your page via the JavaScript window.opener object. This is a read/write object that they can manipulate. It has a property called window.opener.location that can be changed, causing the browser to go to a new URL instead of staying at your page. If you don't understand this paragraph, skip it. It's merely the technical version of the explanation given earlier.
+
+You can prevent it from happening in some browsers by adding rel="noopener noreferrer" to your link. With this added, the above example becomes:
+<a href="https://www.thesitewizard.com/" rel="noopener noreferrer" target="_blank">thesitewizard.com</a>
+
+Theoretically, either rel="noopener" or rel="noreferrer" is sufficient to prevent this problem, with rel="noopener" being the correct attribute to use. (The other one, rel="noreferrer", has a side-effect in that the browser will also withhold the referring URL.) However, at this time, not all browsers support rel="noopener". Likewise, rel="noreferrer" is also not supported by some browsers. Since the list of browsers that support either attribute is not identical, if you want this protection from the greatest subset of browsers possible, you will probably need to use both.
+
+That said, the workaround only helps with the later versions of Chrome, Firefox and Safari. Internet Explorer does not have such a facility, although from my cursory test, version 11 seems to be immune to the attack in its default security zone. I'm not sure about Microsoft Edge.
+
+In other words, the method detailed above is not 100% foolproof. The best way to avoid the problem is to use normal links, without target="_blank".
+Conclusion
+
+My general recommendation is to avoid opening links in a new window or tab, if possible. Of course there may be specific instances where this is needed (which is why such a facility exists in the first place, for those rare cases where it may be required). If so, you may want to warn your visitors by saying something like "opens in a new window" next to your link (if it's appropriate). It won't help the average Internet user, who won't know what you are talking about or how to deal with it, and it won't guard them from attacks using your site, but at least you will won't irritate the more experienced Internet visitors.
+
+Copyright © 2015-2019 Christopher Heng. All rights reserved.
+Get more free tips and articles like this, on web design, promotion, revenue and scripting, from https://www.thesitewizard.com/.
+
+You are here: Top > HTML Tutorials > How to Make Links Open in a New Window or Tab
+
+Other articles on: HTML, Usability, FAQ
+
+    </p>
+    <h2 id="chapter03">Kapitel 3</h2>
+    <p>...</p>
+    <h2 id="chapter04">Kapitel 4</h2>
+    <p>...</p>
+    <h2 id="chapter05">Kapitel 5</h2>
+    <p>
+        How to Make Links Open in a New Window or Tab
+by Christopher Heng, thesitewizard.com
+
+I was asked by a visitor how he could make hyperlinks on his website open a new browser window or tab when clicked. This article answers that question.
+Prerequisites
+
+Since the visitor did not specify which web editor he was using, I will assume here that he is working directly in HTML.
+
+Note that this does not mean you cannot follow this tutorial if you use a visual web editor, or if your website uses some sort of blogging software. It merely means that you will need to somehow access the HTML code of your page so that you can modify it. Most web editors and blogging software allow you to do this.
+
+For example, if you are using Expression Web, you can modify the HTML code of your web page by switching to the Code mode. Instructions for this can be found in the article How to Insert HTML Code into a Web Page with Expression Web. Similarly, Dreamweaver users can follow the steps given in How to Insert Raw HTML Code in Dreamweaver, BlueGriffon users the tutorial How to Insert HTML Code in BlueGriffon, and KompoZer users the guide How to Insert HTML in KompoZer.
+How to Open Hyperlinks in a New Browser Tab or Window
+
+The short answer is: just add a target="_blank" attribute to your links (anchor tags).
+
+For example, if you have a link that says the following:
+<a href="https://www.thesitewizard.com/">thesitewizard.com</a>
+
+Change the above so that it now says:
+<a href="https://www.thesitewizard.com/" target="_blank">thesitewizard.com</a>
+
+Now when your visitors click that link, it will open in a new window or tab (depending on which web browser they are using and how they configured that browser).
+
+Note that if your web page uses the "strict" DOCTYPE of XHTML 1.0 or 1.1, you will not be able to do the above and still have your page validate as correct. However, I suspect virtually nobody uses those, so don't worry if you don't understand what I just said in this paragraph. The "transitional" versions of those DOCTYPEs are fine, though, since the target attribute is still supported there.
+
+If you are using Expression Web, Dreamweaver, BlueGriffon or KompoZer, just click somewhere in the link that you want to modify, switch to the mode that allows you to change the HTML code (see the tutorials listed earlier in the Prerequisites section to find out how to do this), and add the target="_blank" attribute.
+It Doesn't Have the Benefit You Think It Confers
+
+I know that some new webmasters seem to have got the impression that causing external links to open in a new window helps to keep people from leaving your website. This is an erroneous assumption. If someone clicks on a link and wants to return to your site, they will simply hit the Back button on their browser. Most people, even non-computer-geeks, learn this feature of their browser within a short time of discovering the Internet. The power users learn, in addition, how to right click a link and select "Open in a new tab" (or window) when they need a link to be displayed in a separate tab or window.
+
+When you create links that open in a new window, you are actually preventing newcomers from returning to your website. You may think that they will know how to simply switch back to the original window. My experience with such people suggests otherwise; they are stymied by the Back button not working, and are not even aware that they are looking at a new tab or window. When they can't figure out how to solve the problem, they will give up and move on to other things.
+
+The situation is not better with experienced users. While they can figure out that they are looking at a new tab or window, and can switch back, they tend to get very irritated at your site for opening windows without their permission. After all, they are power users: if they wanted to open a new window, they will open it themselves; they don't want you to do it without their consent. It's worse if all your links open in new windows (leading to the comedic situation described in my article about usability mistakes made by amateur webmasters).
+It Makes Your Site Vulnerable to Phishing Attacks
+
+At the time this is written, when you open a new page with target="_blank", the site you link to gains access to the window/tab containing your page and is able to change it (in the visitor's browser) to display a different web address.
+
+This not only thwarts your attempt to keep visitors at your site (if that's your purpose), it's also a potential danger to them. For example, if you have a login page, the linked-to site may replace it with one on another site that looks like yours, but actually collects your visitor's login details. This kind of attack is called "phishing". Even if your site does not have facilities for visitors to log in, the linked-to site can replace it with a page that delivers malware.
+
+This vulnerability is not hypothetical. The people from the Google Security Team have noted a "significant number of reports" of such "tabnabbing" being used to deliver malware.
+
+Technical details (only for those who are interested): the newly open site gains limited access to your page via the JavaScript window.opener object. This is a read/write object that they can manipulate. It has a property called window.opener.location that can be changed, causing the browser to go to a new URL instead of staying at your page. If you don't understand this paragraph, skip it. It's merely the technical version of the explanation given earlier.
+
+You can prevent it from happening in some browsers by adding rel="noopener noreferrer" to your link. With this added, the above example becomes:
+<a href="https://www.thesitewizard.com/" rel="noopener noreferrer" target="_blank">thesitewizard.com</a>
+
+Theoretically, either rel="noopener" or rel="noreferrer" is sufficient to prevent this problem, with rel="noopener" being the correct attribute to use. (The other one, rel="noreferrer", has a side-effect in that the browser will also withhold the referring URL.) However, at this time, not all browsers support rel="noopener". Likewise, rel="noreferrer" is also not supported by some browsers. Since the list of browsers that support either attribute is not identical, if you want this protection from the greatest subset of browsers possible, you will probably need to use both.
+
+That said, the workaround only helps with the later versions of Chrome, Firefox and Safari. Internet Explorer does not have such a facility, although from my cursory test, version 11 seems to be immune to the attack in its default security zone. I'm not sure about Microsoft Edge.
+
+In other words, the method detailed above is not 100% foolproof. The best way to avoid the problem is to use normal links, without target="_blank".
+Conclusion
+
+My general recommendation is to avoid opening links in a new window or tab, if possible. Of course there may be specific instances where this is needed (which is why such a facility exists in the first place, for those rare cases where it may be required). If so, you may want to warn your visitors by saying something like "opens in a new window" next to your link (if it's appropriate). It won't help the average Internet user, who won't know what you are talking about or how to deal with it, and it won't guard them from attacks using your site, but at least you will won't irritate the more experienced Internet visitors.
+
+Copyright © 2015-2019 Christopher Heng. All rights reserved.
+Get more free tips and articles like this, on web design, promotion, revenue and scripting, from https://www.thesitewizard.com/.
+
+You are here: Top > HTML Tutorials > How to Make Links Open in a New Window or Tab
+
+Other articles on: HTML, Usability, FAQ
+
+
+    </p>
+</body>
+
+</html>
